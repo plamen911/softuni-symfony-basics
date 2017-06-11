@@ -9,7 +9,22 @@
         {{ form_row(form.parent) }}
         {{ form_row(form.title) }}
         {{ form_row(form.description) }}
-        {{ form_row(form.file) }}
+        {#{{ form_row(form.file) }}#}
+        <div class="form-group{% if form_errors(form.file) %} has-error{% endif %}">
+            {{ form_label(form.file) }}
+            <div class="col-sm-8">
+                {{ form_widget(form.file) }}
+                {{ form_errors(form.file) }}
+                {% if (productCategory.webPath) %}
+                    <p class="help">
+                        <a href="{{ productCategory.webPath }}" target="_blank">
+                            <img src="{{ productCategory.webPath }}" class="img-thumbnail" width="120"/>
+                        </a>
+                    </p>
+                {% endif %}
+
+            </div>
+        </div>
         {{ form_row(form.rank) }}
         {{ form_row(form.products) }}
         <div class="form-group">

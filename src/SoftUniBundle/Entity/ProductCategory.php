@@ -104,6 +104,7 @@ class ProductCategory
 
     /**
      * @Assert\File(maxSize="6000000")
+     * @Assert\File(mimeTypes={ "image/png", "image/jpg", "image/jpeg" })
      */
     private $file;
 
@@ -362,14 +363,14 @@ class ProductCategory
     {
         // the absolute directory path where uploaded
         // documents should be saved
-        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+        return __DIR__ . '/../../../web' . $this->getUploadDir();
     }
 
     protected function getUploadDir()
     {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'uploads/product-category';
+        return '/uploads/product-category';
     }
 
     /**
@@ -404,13 +405,12 @@ class ProductCategory
 
         // move takes the target directory and then the
         // target filename to move to
-        $this->getFile()->move(
-            $this->getUploadRootDir(),
-            $this->getFile()->getClientOriginalName()
-        );
+        $fileName = md5(uniqid()) . '.' . $this->getFile()->guessExtension();
+
+        $this->getFile()->move($this->getUploadRootDir(), $fileName);
 
         // set the path property to the filename where you've saved the file
-        $this->image = $this->getFile()->getClientOriginalName();
+        $this->image = $fileName;
 
         // clean up the file property as you won't need it anymore
         $this->file = null;
