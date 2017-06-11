@@ -334,6 +334,32 @@ class ProductCategory
         $this->products = $products;
     }
 
+    public function getAbsolutePath()
+    {
+        return null === $this->image
+            ? null
+            : $this->getUploadRootDir() . '/' . $this->image;
+    }
 
+    public function getWebPath()
+    {
+        return null === $this->image
+            ? null
+            : $this->getUploadDir() . '/' . $this->image;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/product-category';
+    }
 }
 
