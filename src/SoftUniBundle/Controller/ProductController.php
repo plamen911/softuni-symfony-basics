@@ -49,6 +49,11 @@ class ProductController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $product->setSlug($this->get('slugger')->slugify($product->getTitle()));
+            $product->setUpdatedAt(new \DateTime());
+            $product->upload();
+
             $em->persist($product);
             $em->flush();
 
@@ -95,6 +100,10 @@ class ProductController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $product->setSlug($this->get('slugger')->slugify($product->getTitle()));
+            $product->setUpdatedAt(new \DateTime());
+            $product->upload();
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin_product_edit', array('id' => $product->getId()));

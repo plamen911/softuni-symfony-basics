@@ -38,6 +38,8 @@ class ProductCategoryController extends Controller
      *
      * @Route("/new", name="admin_product-category_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -47,6 +49,10 @@ class ProductCategoryController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $productCategory->setSlug($this->get('slugger')->slugify($productCategory->getTitle()));
+            $productCategory->setUpdatedAt(new \DateTime());
+            $productCategory->upload();
+
             $em->persist($productCategory);
             $em->flush();
 
@@ -64,6 +70,8 @@ class ProductCategoryController extends Controller
      *
      * @Route("/{id}", name="admin_product-category_show")
      * @Method("GET")
+     * @param ProductCategory $productCategory
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(ProductCategory $productCategory)
     {
@@ -80,6 +88,9 @@ class ProductCategoryController extends Controller
      *
      * @Route("/{id}/edit", name="admin_product-category_edit")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param ProductCategory $productCategory
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, ProductCategory $productCategory)
     {
@@ -88,6 +99,10 @@ class ProductCategoryController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $productCategory->setSlug($this->get('slugger')->slugify($productCategory->getTitle()));
+            $productCategory->setUpdatedAt(new \DateTime());
+            $productCategory->upload();
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin_product-category_edit', array('id' => $productCategory->getId()));

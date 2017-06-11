@@ -1,11 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'SoftUniBundle::base.html.twig' %}
 
 {% block body %}
-    <h1>Productcategory creation</h1>
+    <h2 class="sub-header">Create Product Category</h2>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    {% form_theme form 'SoftUniBundle:form:bootstrap_3_layout.html.twig' %}
+
+    {{ form_start(form, {'attr' : { 'novalidate' : 'novalidate' }}) }}
+        {{ form_row(form.parent) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.file) }}
+        {{ form_row(form.rank) }}
+        <div class="form-group">
+            <div class="col-sm-8 col-lg-offset-4">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
     {{ form_end(form) }}
 
     <ul>

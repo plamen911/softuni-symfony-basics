@@ -2,3 +2,7 @@ services:
 #    soft_uni.example:
 #        class: SoftUniBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    # First we define some basic services to make these utilities available in
+    # the entire application
+    slugger:
+        class: SoftUniBundle\Service\Slugger
