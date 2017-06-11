@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping\OneToMany;
  * @package SoftUniBundle\Entity
  * @author Plamen Markov <plamen@lynxlake.org>
  *
- * @ORM\Table(name="product_categories")
+ * @ORM\Table(name="categories")
  * @ORM\Entity(repositoryClass="SoftUniBundle\Repository\ProductCategoryRepository")
  */
 class ProductCategory

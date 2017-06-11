@@ -91,7 +91,7 @@ class Product
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="SoftUniBundle\Entity\ProductCategory", inversedBy="products")
-     * @ORM\JoinTable(name="posts_categories",
+     * @ORM\JoinTable(name="products_categories",
      *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
      * )
