@@ -56,6 +56,8 @@ class ProductCategoryController extends Controller
             $em->persist($productCategory);
             $em->flush();
 
+            $this->addFlash('success', 'A new product category was successfully created.');
+
             return $this->redirectToRoute('admin_product-category_show', array('id' => $productCategory->getId()));
         }
 
@@ -105,12 +107,14 @@ class ProductCategoryController extends Controller
 
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'Product category was successfully updated.');
+
             return $this->redirectToRoute('admin_product-category_edit', array('id' => $productCategory->getId()));
         }
 
         return $this->render('SoftUniBundle:productcategory:edit.html.twig', array(
             'productCategory' => $productCategory,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

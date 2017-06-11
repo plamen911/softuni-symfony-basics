@@ -1,12 +1,23 @@
 {% extends 'SoftUniBundle::base.html.twig' %}
 
 {% block body %}
-    <h1>Productcategory edit</h1>
+    <h2 class="sub-header">Edit Product Category</h2>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+    {% form_theme form 'SoftUniBundle:form:bootstrap_3_layout.html.twig' %}
+
+    {{ form_start(form, {'attr' : { 'novalidate' : 'novalidate' }}) }}
+        {{ form_row(form.parent) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.file) }}
+        {{ form_row(form.rank) }}
+        {{ form_row(form.products) }}
+        <div class="form-group">
+            <div class="col-sm-8 col-lg-offset-4">
+                <button type="submit" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+    {{ form_end(form) }}
 
     <ul>
         <li>

@@ -111,7 +111,7 @@ class ProductController extends Controller
 
         return $this->render('SoftUniBundle:product:edit.html.twig', array(
             'product' => $product,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
