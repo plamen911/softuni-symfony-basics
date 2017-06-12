@@ -1,0 +1,26 @@
+{% extends 'SoftUniBundle::base.html.twig' %}
+
+{% block body %}
+    <h2 class="sub-header">Notify For New Products</h2>
+
+    {% form_theme form 'SoftUniBundle:form:bootstrap_3_layout.html.twig' %}
+
+    {{ form_start(form) }}
+        <div class="form-group{% if form_errors(form.emails) %} has-error{% endif %}">
+            {{ form_label(form.emails) }}
+            <div class="col-sm-8">
+                {{ form_widget(form.emails) }}
+                {{ form_errors(form.emails) }}
+                <p class="help">
+                    List ot predefined comma-separated email addresses to notify for new products.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-8 col-lg-offset-4">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}

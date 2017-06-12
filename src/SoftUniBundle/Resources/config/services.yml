@@ -14,3 +14,7 @@ services:
     softuni.product_category_manager:
         class: SoftUniBundle\Service\ProductCategoryManager
         arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
+    softuni.notify_manager:
+        class: SoftUniBundle\Service\NotifyManager
+        arguments: ["@service_container"]
