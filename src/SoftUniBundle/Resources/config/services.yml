@@ -6,3 +6,11 @@ services:
     # the entire application
     slugger:
         class: SoftUniBundle\Service\Slugger
+
+    softuni.product_manager:
+        class: SoftUniBundle\Service\ProductManager
+        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+
+    softuni.product_category_manager:
+        class: SoftUniBundle\Service\ProductCategoryManager
+        arguments: ["@doctrine.orm.entity_manager", "@service_container"]

@@ -48,13 +48,9 @@ class ProductCategoryController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $productCategory->setSlug($this->get('slugger')->slugify($productCategory->getTitle()));
-            $productCategory->setUpdatedAt(new \DateTime());
-            $productCategory->upload();
-
-            $em->persist($productCategory);
-            $em->flush();
+            $manager = $this->get('softuni.product_category_manager');
+            $manager->setCategory($productCategory);
+            $manager->createCategory();
 
             $this->addFlash('success', 'A new product category was successfully created.');
 
@@ -101,11 +97,9 @@ class ProductCategoryController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $productCategory->setSlug($this->get('slugger')->slugify($productCategory->getTitle()));
-            $productCategory->setUpdatedAt(new \DateTime());
-            $productCategory->upload();
-
-            $this->getDoctrine()->getManager()->flush();
+            $manager = $this->get('softuni.product_category_manager');
+            $manager->setCategory($productCategory);
+            $manager->updateCategory();
 
             $this->addFlash('success', 'Product category was successfully updated.');
 
@@ -124,6 +118,9 @@ class ProductCategoryController extends Controller
      *
      * @Route("/{id}", name="admin_product-category_delete")
      * @Method("DELETE")
+     * @param Request $request
+     * @param ProductCategory $productCategory
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, ProductCategory $productCategory)
     {
@@ -131,9 +128,9 @@ class ProductCategoryController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($productCategory);
-            $em->flush();
+            $manager = $this->get('softuni.product_category_manager');
+            $manager->setCategory($productCategory);
+            $manager->removeCategory();
         }
 
         return $this->redirectToRoute('admin_product-category_index');
