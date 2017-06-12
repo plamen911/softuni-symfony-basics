@@ -15,14 +15,15 @@
             <div class="col-sm-8">
                 {{ form_widget(form.file) }}
                 {{ form_errors(form.file) }}
-                {% if (productCategory.webPath) %}
-                    <p class="help">
+                <p class="help">
+                    {% if (productCategory.webPath) %}
                         <a href="{{ productCategory.webPath }}" target="_blank">
                             <img src="{{ productCategory.webPath }}" class="img-thumbnail" width="120"/>
                         </a>
-                    </p>
-                {% endif %}
-
+                    {% else %}
+                        <img src="https://placehold.it/120x120" class="img-thumbnail" width="120"/>
+                    {% endif %}
+                </p>
             </div>
         </div>
         {{ form_row(form.rank) }}
