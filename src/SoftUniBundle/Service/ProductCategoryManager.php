@@ -2,6 +2,7 @@
 
 namespace SoftUniBundle\Service;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 use SoftUniBundle\Entity\Product;
@@ -64,7 +65,19 @@ class ProductCategoryManager
         $productCategory->setUpdatedAt(new \DateTime());
         $productCategory->upload();
 
+        // IMPORTANT: Updating (from the inverse side) bidirectional many-to-many relationships
+        // PROBLEM: Changes made only to the inverse side of an association are ignored.
+        // http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
+        // ... my solution - dirty, but works
+        $conn = $this->container->get('doctrine.dbal.default_connection');
+        $conn->delete('products_categories', array('category_id' => $productCategory->getId()));
+        foreach ($productCategory->getProducts() as $product) {
+            $product->addCategory($productCategory);
+            $this->em->persist($product);
+        }
+
         $this->em->persist($productCategory);
+
         $this->em->flush();
     }
 
@@ -99,6 +112,6 @@ class ProductCategoryManager
      */
     public function addProduct(Product $product)
     {
-        // todo
+        $this->productCategory->addProduct($product);
     }
 }

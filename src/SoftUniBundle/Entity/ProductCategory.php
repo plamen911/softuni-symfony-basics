@@ -348,10 +348,30 @@ class ProductCategory
 
     /**
      * @param Product $product
+     * @return $this
      */
     public function addProduct($product)
     {
+        $product->addCategory($this);
         $this->products->add($product);
+
+        return $this;
+    }
+
+    /**
+     * @param Product $product
+     */
+    public function removeProduct($product)
+    {
+        if ($this->products->exists($product)) {
+            $this->products->remove($product);
+        }
+        $product->removeCategory($this);
+    }
+
+    public function removeProducts()
+    {
+        $this->products->clear();
     }
 
     public function getAbsolutePath()

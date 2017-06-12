@@ -4,6 +4,7 @@ namespace SoftUniBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -97,8 +98,8 @@ class Product
      *
      * @ORM\ManyToMany(targetEntity="SoftUniBundle\Entity\ProductCategory", inversedBy="products", cascade={"persist"})
      * @ORM\JoinTable(name="products_categories",
-     *     joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
+     *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
      * )
      * @ORM\OrderBy({"title" = "ASC"})
      */
@@ -370,6 +371,14 @@ class Product
     public function addCategory($category)
     {
         $this->categories->add($category);
+    }
+
+    /**
+     * @param ProductCategory $productCategory
+     */
+    public function removeCategory($productCategory)
+    {
+        $this->categories->remove($productCategory);
     }
 
     public function getAbsolutePath()
