@@ -81,7 +81,17 @@ class ProductCategoryManager
 
     public function findCategoryBy()
     {
+        // todo
+        /*
+        $qb = $this->em->createQueryBuilder();
 
+         $qb->select('u')
+            ->from('mybundleBundle:User', 'u')
+            ->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"' . $role . '"%');
+
+        return $qb->getQuery()->getResult();
+        */
     }
 
     /**
@@ -89,6 +99,6 @@ class ProductCategoryManager
      */
     public function addProduct(Product $product)
     {
-
+        // todo
     }
 }
