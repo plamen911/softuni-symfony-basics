@@ -10,6 +10,7 @@
                 <th>Title</th>
                 <th>Image</th>
                 <th>Rank</th>
+                <th>Products</th>
             </tr>
             </thead>
             <tbody>
@@ -37,6 +38,7 @@
                         </td>
                     {% endif %}
                     <td>{{ productCategory.rank }}</td>
+                    <td><a href="#">{{ productCategory.products|length }}</a></td>
                 </tr>
             {% endfor %}
             </tbody>
