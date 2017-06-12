@@ -57,16 +57,39 @@ class ProductManager
 
     public function createProduct()
     {
+        $product = $this->product;
 
+        $product->setSlug($this->container->get('slugger')->slugify($product->getTitle()));
+        $product->setUpdatedAt(new \DateTime());
+        $product->upload();
+
+        $this->em->persist($product);
+        $this->em->flush();
+    }
+
+    public function editProduct()
+    {
+        $this->createProduct();
     }
 
     public function removeProduct()
     {
-
+        $this->em->remove($this->product);
+        $this->em->flush();
     }
 
     public function findProductBy()
     {
+        // todo
+        /*
+        $qb = $this->em->createQueryBuilder();
 
+         $qb->select('u')
+            ->from('mybundleBundle:User', 'u')
+            ->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"' . $role . '"%');
+
+        return $qb->getQuery()->getResult();
+        */
     }
 }

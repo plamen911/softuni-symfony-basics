@@ -48,14 +48,9 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $product->setSlug($this->get('slugger')->slugify($product->getTitle()));
-            $product->setUpdatedAt(new \DateTime());
-            $product->upload();
-
-            $em->persist($product);
-            $em->flush();
+            $manager = $this->get('softuni.product_manager');
+            $manager->setProduct($product);
+            $manager->createProduct();
 
             return $this->redirectToRoute('admin_product_show', array('id' => $product->getId()));
         }
@@ -100,11 +95,9 @@ class ProductController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $product->setSlug($this->get('slugger')->slugify($product->getTitle()));
-            $product->setUpdatedAt(new \DateTime());
-            $product->upload();
-
-            $this->getDoctrine()->getManager()->flush();
+            $manager = $this->get('softuni.product_manager');
+            $manager->setProduct($product);
+            $manager->editProduct();
 
             return $this->redirectToRoute('admin_product_edit', array('id' => $product->getId()));
         }
@@ -131,9 +124,9 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($product);
-            $em->flush();
+            $manager = $this->get('softuni.product_manager');
+            $manager->setProduct($product);
+            $manager->removeProduct();
         }
 
         return $this->redirectToRoute('admin_product_index');

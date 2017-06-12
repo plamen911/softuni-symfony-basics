@@ -1,52 +1,61 @@
 {% extends 'SoftUniBundle::base.html.twig' %}
 
 {% block body %}
-    <h1>Product</h1>
+    <h2 class="sub-header">Product Details</h2>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ product.slug }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ product.title }}</td>
-            </tr>
-            <tr>
-                <th>Subtitle</th>
-                <td>{{ product.subtitle }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ product.image }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ product.price }}</td>
-            </tr>
-            <tr>
-                <th>Rank</th>
-                <td>{{ product.rank }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{% if product.createdAt %}{{ product.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ product.id }}</td>
+                </tr>
+                <tr>
+                    <th>Slug</th>
+                    <td>{{ product.slug }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ product.title }}</td>
+                </tr>
+                <tr>
+                    <th>Subtitle</th>
+                    <td>{{ product.subtitle }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ product.description }}</td>
+                </tr>
+                <tr>
+                    <th>Image</th>
+                    <td>{% if (product.webPath) %}
+                            <a href="{{ product.webPath }}" target="_blank">
+                                <img src="{{ product.webPath }}" class="img-thumbnail" width="120"/>
+                            </a>
+                        {% else %}
+                            <img src="https://placehold.it/120x120" class="img-thumbnail" width="120"/>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>{{ product.price }}</td>
+                </tr>
+                <tr>
+                    <th>Rank</th>
+                    <td>{{ product.rank }}</td>
+                </tr>
+                <tr>
+                    <th>Created at</th>
+                    <td>{% if product.createdAt %}{{ product.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Updated at</th>
+                    <td>{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <ul>
         <li>
@@ -57,7 +66,7 @@
         </li>
         <li>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+            <input type="submit" value="Delete">
             {{ form_end(delete_form) }}
         </li>
     </ul>

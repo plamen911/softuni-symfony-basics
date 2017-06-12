@@ -20,7 +20,6 @@ class ProductCategoryType extends AbstractType
     {
         $builder->add('title', TextType::class, ['label' => 'Title', 'required' => true, 'attr' => ['placeholder' => 'Title...']])
             ->add('description', TextareaType::class, ['label' => 'Description', 'required' => false, 'attr' => ['placeholder' => 'Description...']])
-            //->add('image', FileType::class, ['label' => 'Upload Image', 'mapped' => false])
             ->add('file', FileType::class, ['label' => 'Upload Image', 'required' => false])
             ->add('rank', NumberType::class, ['label' => 'Rank', 'required' => false, 'attr' => ['placeholder' => 'Rank...']])
             ->add('parent', EntityType::class, [
@@ -31,7 +30,15 @@ class ProductCategoryType extends AbstractType
                 'placeholder' => '- select -',
                 'empty_data' => null
             ])
-            ->add('products');
+            // ->add('products')
+            ->add('products', EntityType::class, [
+                'class' => 'SoftUniBundle\Entity\Product',
+                'choice_label' => 'title',
+                'multiple' => true,
+                'expanded' => true
+            ])
+
+        ;
     }
     
     /**

@@ -1,10 +1,11 @@
 {% extends 'SoftUniBundle::base.html.twig' %}
 
 {% block body %}
-    <h1>Products list</h1>
+    <h2 class="sub-header">Product List</h2>
 
-    <table>
-        <thead>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Slug</th>
@@ -14,42 +15,43 @@
                 <th>Image</th>
                 <th>Price</th>
                 <th>Rank</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
+                <th>Created at</th>
+                <th>Updated at</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td><a href="{{ path('admin_product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
-                <td>{{ product.slug }}</td>
-                <td>{{ product.title }}</td>
-                <td>{{ product.subtitle }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.image }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.rank }}</td>
-                <td>{% if product.createdAt %}{{ product.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('admin_product_show', { 'id': product.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('admin_product_edit', { 'id': product.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td><a href="{{ path('admin_product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
+                    <td>{{ product.slug }}</td>
+                    <td>{{ product.title }}</td>
+                    <td>{{ product.subtitle }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.image }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.rank }}</td>
+                    <td>{% if product.createdAt %}{{ product.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('admin_product_show', { 'id': product.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_product_edit', { 'id': product.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <ul>
         <li>
-            <a href="{{ path('admin_product_new') }}">Create a new product</a>
+            <a href="{{ path('admin_product_new') }}">Create a New Product</a>
         </li>
     </ul>
 {% endblock %}

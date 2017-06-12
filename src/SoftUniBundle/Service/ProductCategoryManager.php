@@ -79,7 +79,7 @@ class ProductCategoryManager
         $this->em->flush();
     }
 
-    public function findCategoryBy()
+    public function findCategoryBy(array $params)
     {
         // todo
         /*

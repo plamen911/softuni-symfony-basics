@@ -95,10 +95,10 @@ class Product
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="SoftUniBundle\Entity\ProductCategory", inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="SoftUniBundle\Entity\ProductCategory", inversedBy="products", cascade={"persist"})
      * @ORM\JoinTable(name="products_categories",
-     *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
+     *     joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
      * )
      * @ORM\OrderBy({"title" = "ASC"})
      */
@@ -106,6 +106,7 @@ class Product
 
     /**
      * @Assert\File(maxSize="6000000")
+     * @Assert\File(mimeTypes={ "image/png", "image/jpg", "image/jpeg" })
      */
     private $file;
 
@@ -117,6 +118,8 @@ class Product
         $this->categories = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->rank = 0;
+        $this->price = 0;
     }
 
     /**
@@ -387,14 +390,14 @@ class Product
     {
         // the absolute directory path where uploaded
         // documents should be saved
-        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+        return __DIR__ . '/../../../web' . $this->getUploadDir();
     }
 
     protected function getUploadDir()
     {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'uploads/product';
+        return '/uploads/product';
     }
 
 
@@ -430,13 +433,12 @@ class Product
 
         // move takes the target directory and then the
         // target filename to move to
-        $this->getFile()->move(
-            $this->getUploadRootDir(),
-            $this->getFile()->getClientOriginalName()
-        );
+        $fileName = md5(uniqid()) . '.' . $this->getFile()->guessExtension();
+
+        $this->getFile()->move($this->getUploadRootDir(), $fileName);
 
         // set the path property to the filename where you've saved the file
-        $this->image = $this->getFile()->getClientOriginalName();
+        $this->image = $fileName;
 
         // clean up the file property as you won't need it anymore
         $this->file = null;

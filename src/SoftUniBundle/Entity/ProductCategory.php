@@ -97,7 +97,7 @@ class ProductCategory
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="SoftUniBundle\Entity\Product", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="SoftUniBundle\Entity\Product", mappedBy="categories", cascade={"persist"})
      * @ORM\OrderBy({"title" = "ASC"})
      */
     private $products;
@@ -117,6 +117,7 @@ class ProductCategory
         $this->products = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->rank = 0;
     }
 
     /**

@@ -99,7 +99,7 @@ class ProductCategoryController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $manager = $this->get('softuni.product_category_manager');
             $manager->setCategory($productCategory);
-            $manager->updateCategory();
+            $manager->editCategory();
 
             $this->addFlash('success', 'Product category was successfully updated.');
 
