@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 use SoftUniBundle\Entity\Product;
 use SoftUniBundle\Entity\ProductCategory;
+use SoftUniBundle\SoftUniBundle;
 
 /**
  * Class ProductCategoryManager
@@ -95,16 +96,16 @@ class ProductCategoryManager
     public function findCategoryBy(array $params)
     {
         // todo
-        /*
-        $qb = $this->em->createQueryBuilder();
 
-         $qb->select('u')
-            ->from('mybundleBundle:User', 'u')
-            ->where('u.roles LIKE :roles')
-            ->setParameter('roles', '%"' . $role . '"%');
+//        $qb = $this->em->createQueryBuilder();
+//
+//         $qb->select('u')
+//            ->from('mybundleBundle:User', 'u')
+//            ->where('u.roles LIKE :roles')
+//            ->setParameter('roles', '%"' . $role . '"%');
+//
+//        return $qb->getQuery()->getResult();
 
-        return $qb->getQuery()->getResult();
-        */
     }
 
     /**

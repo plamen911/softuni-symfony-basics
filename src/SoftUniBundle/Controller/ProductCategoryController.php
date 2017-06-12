@@ -27,11 +27,12 @@ class ProductCategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $productCategories = $em->getRepository('SoftUniBundle:ProductCategory')->findAll();
+        // $productCategories = $em->getRepository('SoftUniBundle:ProductCategory')->findAll();
+        $productCategories = $em->getRepository('SoftUniBundle:ProductCategory')->findBy(['parentId' => null], ['rank' => 'DESC', 'title' => 'ASC']);
 
-        return $this->render('SoftUniBundle:productcategory:index.html.twig', array(
-            'productCategories' => $productCategories,
-        ));
+        return $this->render('SoftUniBundle:productcategory:index.html.twig', [
+            'productCategories' => $productCategories
+        ]);
     }
 
     /**

@@ -68,6 +68,13 @@ class ProductCategory
     private $rank;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="parent_id", type="integer", nullable=true)
+     */
+    private $parentId;
+
+    /**
      * Many Categories have One Category.
      * @ManyToOne(targetEntity="ProductCategory", inversedBy="children")
      * @JoinColumn(name="parent_id", referencedColumnName="id")
@@ -296,6 +303,22 @@ class ProductCategory
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
+
+    /**
+     * @param int $parentId
+     */
+    public function setParentId($parentId)
+    {
+        $this->parentId = $parentId;
     }
 
     /**

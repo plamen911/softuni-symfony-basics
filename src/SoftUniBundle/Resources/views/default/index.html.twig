@@ -1,0 +1,46 @@
+{% extends 'SoftUniBundle::base.html.twig' %}
+
+{% block body %}
+    <h2 class="sub-header">Categories</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Rank</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for productCategory in productCategories %}
+                <tr>
+                    {% if (productCategory.children|length) %}
+                        <td><a href="#">{{ productCategory.title }} {{ productCategory.children|length }}</a></td>
+                        <td><a href="#">
+                                {% if (productCategory.image) %}
+                                <img src="{{ productCategory.webPath }}" class="img-thumbnail" width="80"/>
+                            {% else %}
+                                <img src="https://placehold.it/80x80" class="img-thumbnail" width="80"/>
+                                {% endif %}
+                            </a>
+                        </td>
+                    {% else %}
+                        <td><a href="#">{{ productCategory.title }} {{ productCategory.children|length }}</a></td>
+                        <td><a href="#">
+                                {% if (productCategory.image) %}
+                                    <img src="{{ productCategory.webPath }}" class="img-thumbnail" width="80"/>
+                                {% else %}
+                                    <img src="https://placehold.it/80x80" class="img-thumbnail" width="80"/>
+                                {% endif %}
+                            </a>
+                        </td>
+                    {% endif %}
+                    <td>{{ productCategory.rank }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
