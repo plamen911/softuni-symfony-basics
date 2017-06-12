@@ -1,47 +1,58 @@
 {% extends 'SoftUniBundle::base.html.twig' %}
 
 {% block body %}
-    <h1>Productcategories list</h1>
+    <h2 class="sub-header">Product Categories list</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Slug</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Rank</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for productCategory in productCategories %}
-            <tr>
-                <td><a href="{{ path('admin_product-category_show', { 'id': productCategory.id }) }}">{{ productCategory.id }}</a></td>
-                <td>{{ productCategory.slug }}</td>
-                <td>{{ productCategory.title }}</td>
-                <td>{{ productCategory.description }}</td>
-                <td>{{ productCategory.image }}</td>
-                <td>{{ productCategory.rank }}</td>
-                <td>{% if productCategory.createdAt %}{{ productCategory.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if productCategory.updatedAt %}{{ productCategory.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('admin_product-category_show', { 'id': productCategory.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('admin_product-category_edit', { 'id': productCategory.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Parent</th>
+                    <th>Slug</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Rank</th>
+                    <th>Createdat</th>
+                    <th>Updatedat</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for productCategory in productCategories %}
+                <tr>
+                    <td>
+                        <a href="{{ path('admin_product-category_show', { 'id': productCategory.id }) }}">{{ productCategory.id }}</a>
+                    </td>
+                    <td>{% if (productCategory.parent) %}{{ productCategory.parent.title }}{% endif %}</td>
+                    <td>{{ productCategory.slug }}</td>
+                    <td>{{ productCategory.title }}</td>
+                    <td>{{ productCategory.description }}</td>
+                    <td>{% if (productCategory.image) %}
+                            <img src="{{ productCategory.webPath }}" class="img-thumbnail" width="80"/>
+                        {% else %}
+                            <img src="https://placehold.it/80x80" class="img-thumbnail" width="80"/>
+                        {% endif %}
+                    </td>
+                    <td>{{ productCategory.rank }}</td>
+                    <td>{% if productCategory.createdAt %}{{ productCategory.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if productCategory.updatedAt %}{{ productCategory.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('admin_product-category_show', { 'id': productCategory.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_product-category_edit', { 'id': productCategory.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <ul>
         <li>
