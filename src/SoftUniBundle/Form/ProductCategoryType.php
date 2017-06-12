@@ -29,16 +29,7 @@ class ProductCategoryType extends AbstractType
                 'required' => true,
                 'placeholder' => '- select -',
                 'empty_data' => null
-            ])
-            // ->add('products')
-            ->add('products', EntityType::class, [
-                'class' => 'SoftUniBundle\Entity\Product',
-                'choice_label' => 'title',
-                'multiple' => true,
-                'expanded' => true
-            ])
-
-        ;
+            ]);
     }
     
     /**

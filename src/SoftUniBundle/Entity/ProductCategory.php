@@ -346,6 +346,14 @@ class ProductCategory
         $this->products = $products;
     }
 
+    /**
+     * @param Product $product
+     */
+    public function addProduct($product)
+    {
+        $this->products->add($product);
+    }
+
     public function getAbsolutePath()
     {
         return null === $this->image
