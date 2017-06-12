@@ -1,0 +1,30 @@
+{% form_theme form 'SoftUniBundle:form:bootstrap_3_layout.html.twig' %}
+
+{{ form_start(form, {'attr' : { 'novalidate' : 'novalidate' }}) }}
+    {{ form_row(form.parent) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    <div class="form-group{% if form_errors(form.file) %} has-error{% endif %}">
+        {{ form_label(form.file) }}
+        <div class="col-sm-8">
+            {{ form_widget(form.file) }}
+            {{ form_errors(form.file) }}
+            <p class="help">
+                {% if (productCategory.webPath) %}
+                    <a href="{{ productCategory.webPath }}" target="_blank">
+                        <img src="{{ productCategory.webPath }}" class="img-thumbnail" width="120"/>
+                    </a>
+                {% else %}
+                    <img src="https://placehold.it/120x120" class="img-thumbnail" width="120"/>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    {{ form_row(form.rank) }}
+    {{ form_row(form.products) }}
+    <div class="form-group">
+        <div class="col-sm-8 col-lg-offset-4">
+            <button type="submit" class="btn btn-primary">{{ buttonLabel }}</button>
+        </div>
+    </div>
+{{ form_end(form) }}
