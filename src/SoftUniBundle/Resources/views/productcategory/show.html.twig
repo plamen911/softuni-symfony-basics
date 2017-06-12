@@ -1,44 +1,60 @@
 {% extends 'SoftUniBundle::base.html.twig' %}
 
 {% block body %}
-    <h1>Productcategory</h1>
+    <h2 class="sub-header">Product Category Details</h2>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ productCategory.id }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ productCategory.slug }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ productCategory.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ productCategory.description }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ productCategory.image }}</td>
-            </tr>
-            <tr>
-                <th>Rank</th>
-                <td>{{ productCategory.rank }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{% if productCategory.createdAt %}{{ productCategory.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{% if productCategory.updatedAt %}{{ productCategory.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ productCategory.id }}</td>
+                </tr>
+                <tr>
+                    <th>Parent</th>
+                    <td>{% if (productCategory.parent) %}
+                            <a href="{{ path('admin_product-category_show', { 'id': productCategory.parent.id }) }}">{{ productCategory.parent.title }}</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Slug</th>
+                    <td>{{ productCategory.slug }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ productCategory.title }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ productCategory.description }}</td>
+                </tr>
+                <tr>
+                    <th>Image</th>
+                    <td>{% if (productCategory.webPath) %}
+                            <a href="{{ productCategory.webPath }}" target="_blank">
+                                <img src="{{ productCategory.webPath }}" class="img-thumbnail" width="120"/>
+                            </a>
+                        {% else %}
+                            <img src="https://placehold.it/120x120" class="img-thumbnail" width="120"/>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Rank</th>
+                    <td>{{ productCategory.rank }}</td>
+                </tr>
+                <tr>
+                    <th>Created at</th>
+                    <td>{% if productCategory.createdAt %}{{ productCategory.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Updated at</th>
+                    <td>{% if productCategory.updatedAt %}{{ productCategory.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <ul>
         <li>
