@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Individual project for the Symfony 3 course @ SoftUni{% endblock %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -19,12 +20,12 @@
         }
     </style>
     {% block stylesheets %}{% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 <body>
 {% for type, messages in app.session.flashbag.all() %}
     {% for message in messages %}
-        <div class="alert alert-{{type}} alert-dismissible">
+        <div class="alert alert-{{ type }} alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             {{ message }}
         </div>
@@ -33,7 +34,8 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -45,7 +47,8 @@
             <ul class="nav navbar-nav navbar-left">
                 <li class="active"><a href="{{ path('category_list') }}">Home</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Admin <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ path('admin_product-category_index') }}">Categories</a></li>
                         <li><a href="{{ path('admin_product_index') }}">Products</a></li>
@@ -60,6 +63,16 @@
 <div class="container-fluid">
     {% block body %}{% endblock %}
 </div>
+<footer class="footer">
+    <hr>
+    <p class="text-center">Individual project for the
+        <a href="https://softuni.bg/trainings/1669/symfony-basics-may-2017" target="_blank">Основи на Symfony - май
+            2017</a>
+        @ <a href="https://softuni.bg" target="_blank">SoftUni</a> by <a
+                href="https://www.linkedin.com/in/plamen-markov-14254965/" target="_blank">Plamen Markov</a>.</p>
+    <p class="text-center"><a href="https://github.com/plamen911/softuni-symfony-basics" target="_blank">GitHub
+            Repository</a></p>
+</footer>
 {% block javascripts %}{% endblock %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>
