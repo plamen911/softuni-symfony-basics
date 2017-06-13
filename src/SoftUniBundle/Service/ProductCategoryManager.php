@@ -93,19 +93,9 @@ class ProductCategoryManager
         $this->em->flush();
     }
 
-    public function findCategoryBy(array $params)
+    public function findCategoryBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        // todo
-
-//        $qb = $this->em->createQueryBuilder();
-//
-//         $qb->select('u')
-//            ->from('mybundleBundle:User', 'u')
-//            ->where('u.roles LIKE :roles')
-//            ->setParameter('roles', '%"' . $role . '"%');
-//
-//        return $qb->getQuery()->getResult();
-
+        return $this->em->getRepository('SoftUniBundle:ProductCategory')->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**

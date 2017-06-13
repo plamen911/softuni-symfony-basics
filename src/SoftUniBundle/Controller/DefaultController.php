@@ -30,9 +30,8 @@ class DefaultController extends Controller
      */
     public function categoryListAction($parentId = null)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $productCategories = $em->getRepository('SoftUniBundle:ProductCategory')->findBy(['parentId' => $parentId], ['rank' => 'DESC', 'title' => 'ASC']);
+        $manager = $this->get('softuni.product_category_manager');
+        $productCategories = $manager->findCategoryBy(['parentId' => $parentId], ['rank' => 'DESC', 'title' => 'ASC']);
 
         return $this->render('SoftUniBundle:default:index.html.twig', [
             'productCategories' => $productCategories

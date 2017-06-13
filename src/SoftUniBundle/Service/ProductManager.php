@@ -78,18 +78,8 @@ class ProductManager
         $this->em->flush();
     }
 
-    public function findProductBy()
+    public function findProductBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        // todo
-        /*
-        $qb = $this->em->createQueryBuilder();
-
-         $qb->select('u')
-            ->from('mybundleBundle:User', 'u')
-            ->where('u.roles LIKE :roles')
-            ->setParameter('roles', '%"' . $role . '"%');
-
-        return $qb->getQuery()->getResult();
-        */
+        return $this->em->getRepository('SoftUniBundle:Product')->findBy($criteria, $orderBy, $limit, $offset);
     }
 }

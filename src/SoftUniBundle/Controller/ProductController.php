@@ -24,9 +24,8 @@ class ProductController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $products = $em->getRepository('SoftUniBundle:Product')->findAll();
+        $manager = $this->get('softuni.product_manager');
+        $products = $manager->findProductBy([], ['rank' => 'DESC', 'title' => 'ASC']);
 
         return $this->render('SoftUniBundle:product:index.html.twig', array(
             'products' => $products,
