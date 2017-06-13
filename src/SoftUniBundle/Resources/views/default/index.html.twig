@@ -17,8 +17,8 @@
             {% for productCategory in productCategories %}
                 <tr>
                     {% if (productCategory.children|length) %}
-                        <td><a href="#">{{ productCategory.title }} {{ productCategory.children|length }}</a></td>
-                        <td><a href="#">
+                        <td><a href="{{ path('subcategory_list', {'id': productCategory.id}) }}">{{ productCategory.title }}</a></td>
+                        <td><a href="{{ path('subcategory_list', {'id': productCategory.id}) }}">
                                 {% if (productCategory.image) %}
                                 <img src="{{ productCategory.webPath }}" class="img-thumbnail" width="80"/>
                             {% else %}
@@ -38,7 +38,7 @@
                         </td>
                     {% endif %}
                     <td>{{ productCategory.rank }}</td>
-                    <td><a href="#">{{ productCategory.products|length }}</a></td>
+                    <td><a href="{{ path('category_product_list', {'id': productCategory.id}) }}">{{ productCategory.products|length }}</a></td>
                 </tr>
             {% endfor %}
             </tbody>

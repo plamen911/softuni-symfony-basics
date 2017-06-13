@@ -20,23 +20,33 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('SoftUniBundle:Default:index.html.twig');
+        return $this->categoryListAction();
     }
 
     /**
      * @Route("/category/list", name="category_list")
-     * @param Request $request
+     * @param null $parentId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function categoryListAction(Request $request)
+    public function categoryListAction($parentId = null)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $productCategories = $em->getRepository('SoftUniBundle:ProductCategory')->findBy(['parentId' => null], ['rank' => 'DESC', 'title' => 'ASC']);
+        $productCategories = $em->getRepository('SoftUniBundle:ProductCategory')->findBy(['parentId' => $parentId], ['rank' => 'DESC', 'title' => 'ASC']);
 
         return $this->render('SoftUniBundle:default:index.html.twig', [
             'productCategories' => $productCategories
         ]);
+    }
+
+    /**
+     * @Route("/category/{id}/subcategory/list", name="subcategory_list", requirements={"id": "\d+"})
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function subcategoryListAction($id)
+    {
+        return $this->categoryListAction($id);
     }
 
     /**

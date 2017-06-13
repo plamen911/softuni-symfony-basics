@@ -18,35 +18,41 @@
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Image</th>
-                    <th>Rank</th>
-                    <th>Actions</th>
-                </tr>
+            <tr>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Rank</th>
+                <th>Actions</th>
+            </tr>
             </thead>
             <tbody>
-            {% for product in productCategory.products %}
+            {% if (productCategory.products|length) %}
+                {% for product in productCategory.products %}
+                    <tr>
+                        <td>{{ product.title }}</td>
+                        <td><a href="#">
+                                {% if (product.image) %}
+                                    <img src="{{ product.webPath }}" class="img-thumbnail" width="80"/>
+                                {% else %}
+                                    <img src="https://placehold.it/80x80" class="img-thumbnail" width="80"/>
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td>{{ product.rank }}</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('product_view', {'id': product.id}) }}">show</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
                 <tr>
-                    <td>{{ product.title }}</td>
-                    <td><a href="#">
-                            {% if (product.image) %}
-                                <img src="{{ product.webPath }}" class="img-thumbnail" width="80"/>
-                            {% else %}
-                                <img src="https://placehold.it/80x80" class="img-thumbnail" width="80"/>
-                            {% endif %}
-                        </a>
-                    </td>
-                    <td>{{ product.rank }}</td>
-                    <td>
-                        <ul>
-                            <li>
-                                <a href="{{ path('product_view', {'id': product.id}) }}">show</a>
-                            </li>
-                        </ul>
-                    </td>
+                    <td colspan="4">No products in this category.</td>
                 </tr>
-            {% endfor %}
+            {% endif %}
             </tbody>
         </table>
     </div>
