@@ -1,0 +1,54 @@
+{% extends 'SoftUniBundle::base.html.twig' %}
+
+{% block body %}
+
+    <h2 class="header">Category: {{ productCategory.title }}</h2>
+    {% if (productCategory.description|length) %}
+        <p>{{ productCategory.description }}</p>
+    {% endif %}
+    <ul>
+        <li>
+            <a href="javascript: window.history.back();">Back to the list</a>
+        </li>
+    </ul>
+    <hr>
+
+    <h3 class="sub-header">Product List</h3>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Image</th>
+                    <th>Rank</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for product in productCategory.products %}
+                <tr>
+                    <td>{{ product.title }}</td>
+                    <td><a href="#">
+                            {% if (product.image) %}
+                                <img src="{{ product.webPath }}" class="img-thumbnail" width="80"/>
+                            {% else %}
+                                <img src="https://placehold.it/80x80" class="img-thumbnail" width="80"/>
+                            {% endif %}
+                        </a>
+                    </td>
+                    <td>{{ product.rank }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('product_view', {'id': product.id}) }}">show</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

@@ -105,7 +105,7 @@ class ProductCategory
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="SoftUniBundle\Entity\Product", mappedBy="categories", cascade={"persist"})
-     * @ORM\OrderBy({"title" = "ASC"})
+     * @ORM\OrderBy({"rank" = "DESC", "title" = "ASC"})
      */
     private $products;
 

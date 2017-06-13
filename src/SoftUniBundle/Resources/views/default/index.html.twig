@@ -27,8 +27,8 @@
                             </a>
                         </td>
                     {% else %}
-                        <td><a href="#">{{ productCategory.title }} {{ productCategory.children|length }}</a></td>
-                        <td><a href="#">
+                        <td><a href="{{ path('category_product_list', {'id': productCategory.id}) }}">{{ productCategory.title }}</a></td>
+                        <td><a href="{{ path('category_product_list', {'id': productCategory.id}) }}">
                                 {% if (productCategory.image) %}
                                     <img src="{{ productCategory.webPath }}" class="img-thumbnail" width="80"/>
                                 {% else %}
