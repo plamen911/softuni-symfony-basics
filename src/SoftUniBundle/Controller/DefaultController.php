@@ -2,8 +2,10 @@
 
 namespace SoftUniBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use SoftUniBundle\Entity\Product;
 use SoftUniBundle\Entity\ProductCategory;
+use SoftUniBundle\Service\ProductCategoryManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,12 +27,13 @@ class DefaultController extends Controller
 
     /**
      * @Route("/category/list", name="category_list")
-     * @param null $parentId
+     * @param null $slug
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function categoryListAction($parentId = null)
+    public function categoryListAction($slug = null)
     {
         $manager = $this->get('softuni.product_category_manager');
+        $parentId = $manager->getParentIdBySlug($slug);
         $productCategories = $manager->findCategoryBy(['parentId' => $parentId], ['rank' => 'DESC', 'title' => 'ASC']);
 
         return $this->render('SoftUniBundle:default:index.html.twig', [
@@ -39,17 +42,18 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/category/{id}/subcategory/list", name="subcategory_list", requirements={"id": "\d+"})
-     * @param $id
+     * @Route("/category/{slug}/subcategory/list", name="subcategory_list")
+     * @param $slug
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function subcategoryListAction($id)
+    public function subcategoryListAction($slug)
     {
-        return $this->categoryListAction($id);
+        return $this->categoryListAction($slug);
     }
 
     /**
-     * @Route("/category/{id}/product/list", name="category_product_list", requirements={"id": "\d+"})
+     * @Route("/category/{slug}/product/list", name="category_product_list")
+     * @ParamConverter("productCategory", options={"mapping": {"slug": "slug"}})
      * @param ProductCategory $productCategory
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -61,13 +65,14 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/product/{id}/view", name="product_view", requirements={"id": "\d+"})
+     * @Route("/product/{slug}/view", name="product_view")
+     * @ParamConverter("product", options={"mapping": {"slug": "slug"}})
      * @param Product $product
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function productViewAction(Product $product)
     {
-        return $this->render('SoftUniBundle:default:product-show.html.twig', [
+        return $this->render('SoftUniBundle:default:product_show.html.twig', [
             'product' => $product
         ]);
     }

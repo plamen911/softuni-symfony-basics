@@ -95,7 +95,7 @@ class ProductCategoryManager
 
     public function findCategoryBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->em->getRepository('SoftUniBundle:ProductCategory')->findBy($criteria, $orderBy, $limit, $offset);
+        return $this->em->getRepository(ProductCategory::class)->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
@@ -104,5 +104,18 @@ class ProductCategoryManager
     public function addProduct(Product $product)
     {
         $this->productCategory->addProduct($product);
+    }
+
+    /**
+     * @param $slug
+     * @return mixed
+     */
+    public function getParentIdBySlug($slug)
+    {
+        if (empty($slug)) {
+            return null;
+        }
+
+        return $this->em->getRepository(ProductCategory::class)->findOneBy(['slug' => $slug])->getId();
     }
 }
