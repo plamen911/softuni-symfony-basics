@@ -30,7 +30,7 @@
                 {% for product in productCategory.products %}
                     <tr>
                         <td>{{ product.title }}</td>
-                        <td><a href="#">
+                        <td><a href="{{ path('product_view', {'id': product.id}) }}">
                                 {% if (product.image) %}
                                     <img src="{{ product.webPath }}" class="img-thumbnail" width="80"/>
                                 {% else %}
