@@ -468,4 +468,3 @@ class ProductCategory
         $this->file = null;
     }
 }
-

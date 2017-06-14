@@ -51,6 +51,4 @@ class ProductType extends AbstractType
     {
         return 'softunibundle_product';
     }
-
-
 }

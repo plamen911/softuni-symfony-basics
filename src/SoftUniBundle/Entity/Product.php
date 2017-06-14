@@ -453,4 +453,3 @@ class Product
         $this->file = null;
     }
 }
-
