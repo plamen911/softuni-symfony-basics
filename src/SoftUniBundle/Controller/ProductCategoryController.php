@@ -129,7 +129,7 @@ class ProductCategoryController extends Controller
             $manager = $this->get('softuni.product_category_manager');
             $manager->removeCategory($productCategory);
 
-            $this->addFlash('success', 'Product category was successfully deleted.');
+            $this->addFlash('success', 'Product category was successfully updated.');
         }
 
         return $this->redirectToRoute('admin_product-category_index');

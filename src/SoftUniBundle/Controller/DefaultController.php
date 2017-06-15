@@ -5,10 +5,8 @@ namespace SoftUniBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use SoftUniBundle\Entity\Product;
 use SoftUniBundle\Entity\ProductCategory;
-use SoftUniBundle\Service\ProductCategoryManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class DefaultController
