@@ -10,3 +10,8 @@ PHP Coding Standards Fixer @ http://cs.sensiolabs.org/
 ```
 php php-cs-fixer-v2.phar fix src/SoftUniBundle --dry-run --diff
 ```
+
+Important! On production after update don't forget to clear cache!:
+```
+php bin/console cache:clear --env=prod --no-debug
+```
