@@ -26,7 +26,8 @@ class ProductCategoryController extends Controller
     public function indexAction()
     {
         $manager = $this->get('softuni.product_category_manager');
-        $productCategories = $manager->findCategoryBy(['parentId' => null], ['rank' => 'DESC', 'title' => 'ASC']);
+        //$productCategories = $manager->findCategoryBy(['parentId' => null], ['rank' => 'DESC', 'title' => 'ASC']);
+        $productCategories = $manager->findCategoryBy([], ['rank' => 'DESC', 'title' => 'ASC']);
 
         return $this->render('SoftUniBundle:productcategory:index.html.twig', [
             'productCategories' => $productCategories

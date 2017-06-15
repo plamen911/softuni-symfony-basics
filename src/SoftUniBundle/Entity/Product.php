@@ -41,6 +41,12 @@ class Product
      *
      * @ORM\Column(name="title", type="string", length=255, unique=true)
      * @Assert\NotBlank(message="This field is required.")
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 255,
+     *      minMessage = "Title must be at least {{ limit }} characters long",
+     *      maxMessage = "Title cannot be longer than {{ limit }} characters"
+     * )
      */
     private $title;
 
