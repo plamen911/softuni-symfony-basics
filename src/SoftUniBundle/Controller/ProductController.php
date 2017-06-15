@@ -53,6 +53,8 @@ class ProductController extends Controller
             $manager = $this->get('softuni.product_manager');
             $manager->createProduct($product);
 
+            $this->addFlash('success', 'A new product was successfully created.');
+
             return $this->redirectToRoute('admin_product_show', array('id' => $product->getId()));
         }
 
@@ -99,6 +101,8 @@ class ProductController extends Controller
             $manager = $this->get('softuni.product_manager');
             $manager->editProduct($product);
 
+            $this->addFlash('success', 'Product was successfully updated.');
+
             return $this->redirectToRoute('admin_product_edit', array('id' => $product->getId()));
         }
 
@@ -126,6 +130,8 @@ class ProductController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->get('softuni.product_manager');
             $manager->removeProduct($product);
+
+            $this->addFlash('success', 'Product was successfully deleted.');
         }
 
         return $this->redirectToRoute('admin_product_index');

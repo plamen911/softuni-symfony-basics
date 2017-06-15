@@ -12,13 +12,18 @@ services:
         factory:   ["@doctrine.orm.entity_manager", getRepository]
         arguments: [SoftUniBundle\Entity\Product]
 
+    softuni.product_category_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory:   ["@doctrine.orm.entity_manager", getRepository]
+        arguments: [SoftUniBundle\Entity\ProductCategory]
+
     softuni.product_manager:
         class: SoftUniBundle\Service\ProductManager
         arguments: ["@doctrine.orm.entity_manager", "@service_container", "@softuni.product_repository"]
 
     softuni.product_category_manager:
         class: SoftUniBundle\Service\ProductCategoryManager
-        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+        arguments: ["@doctrine.orm.entity_manager", "@service_container", "@softuni.product_category_repository"]
 
     softuni.notify_manager:
         class: SoftUniBundle\Service\NotifyManager

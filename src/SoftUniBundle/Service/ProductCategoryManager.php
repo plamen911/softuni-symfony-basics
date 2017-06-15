@@ -4,9 +4,11 @@ namespace SoftUniBundle\Service;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Psr\Container\ContainerInterface;
 use SoftUniBundle\Entity\Product;
 use SoftUniBundle\Entity\ProductCategory;
+use SoftUniBundle\Repository\ProductCategoryRepository;
 use SoftUniBundle\SoftUniBundle;
 
 /**
@@ -19,35 +21,29 @@ class ProductCategoryManager
     private $em;
     private $container;
     /**
-     * @var ProductCategory $productCategory
+     * @var ProductCategoryRepository $productCategoryRepo
      */
-    private $productCategory;
+    private $productCategoryRepo;
 
     /**
      * ProductCategoryManager constructor.
      * @param EntityManagerInterface $entityManager
      * @param ContainerInterface $container
+     * @param EntityRepository $productCategoryRepo
      */
-    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container)
+    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, EntityRepository $productCategoryRepo)
     {
         $this->em = $entityManager;
         $this->container = $container;
+        $this->productCategoryRepo = $productCategoryRepo;
     }
 
     /**
-     * @param ProductCategory $productCategory
-     */
-    public function setCategory(ProductCategory $productCategory)
-    {
-        $this->productCategory = $productCategory;
-    }
-
-    /**
-     * @return ProductCategory
+     * @return string
      */
     public function getClass()
     {
-        return $this->productCategory;
+        return $this->productCategoryRepo->getClassName();
     }
 
     /**
@@ -58,10 +54,11 @@ class ProductCategoryManager
         return $this->em;
     }
 
-    public function createCategory()
+    /**
+     * @param ProductCategory $productCategory
+     */
+    public function createCategory(ProductCategory $productCategory)
     {
-        $productCategory = $this->productCategory;
-
         $productCategory->setSlug($this->container->get('slugger')->slugify($productCategory->getTitle()));
         $productCategory->setUpdatedAt(new \DateTime());
         $productCategory->upload();
@@ -78,32 +75,47 @@ class ProductCategoryManager
         }
 
         $this->em->persist($productCategory);
-
         $this->em->flush();
-    }
-
-    public function editCategory()
-    {
-        $this->createCategory();
-    }
-
-    public function removeCategory()
-    {
-        $this->em->remove($this->productCategory);
-        $this->em->flush();
-    }
-
-    public function findCategoryBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
-    {
-        return $this->em->getRepository(ProductCategory::class)->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
+     * @param ProductCategory $productCategory
+     */
+    public function editCategory(ProductCategory $productCategory)
+    {
+        $this->createCategory($productCategory);
+    }
+
+    /**
+     * @param ProductCategory $productCategory
+     */
+    public function removeCategory(ProductCategory $productCategory)
+    {
+        $this->em->remove($productCategory);
+        $this->em->flush();
+    }
+
+    /**
+     * @param array $criteria
+     * @param array|null $orderBy
+     * @param null $limit
+     * @param null $offset
+     * @return array
+     */
+    public function findCategoryBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        return $this->productCategoryRepo->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * @param ProductCategory $productCategory
      * @param Product $product
      */
-    public function addProduct(Product $product)
+    public function addProduct(ProductCategory $productCategory, Product $product)
     {
-        $this->productCategory->addProduct($product);
+        $productCategory->addProduct($product);
+        $this->em->persist($productCategory);
+        $this->em->flush();
     }
 
     /**
@@ -116,6 +128,6 @@ class ProductCategoryManager
             return null;
         }
 
-        return $this->em->getRepository(ProductCategory::class)->findOneBy(['slug' => $slug])->getId();
+        return $this->productCategoryRepo->findOneBy(['slug' => $slug])->getId();
     }
 }

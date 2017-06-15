@@ -26,7 +26,6 @@ class ProductCategoryController extends Controller
     public function indexAction()
     {
         $manager = $this->get('softuni.product_category_manager');
-        //$productCategories = $manager->findCategoryBy(['parentId' => null], ['rank' => 'DESC', 'title' => 'ASC']);
         $productCategories = $manager->findCategoryBy([], ['rank' => 'DESC', 'title' => 'ASC']);
 
         return $this->render('SoftUniBundle:productcategory:index.html.twig', [
@@ -50,18 +49,17 @@ class ProductCategoryController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->get('softuni.product_category_manager');
-            $manager->setCategory($productCategory);
-            $manager->createCategory();
+            $manager->createCategory($productCategory);
 
             $this->addFlash('success', 'A new product category was successfully created.');
 
             return $this->redirectToRoute('admin_product-category_show', array('id' => $productCategory->getId()));
         }
 
-        return $this->render('SoftUniBundle:productcategory:new.html.twig', array(
+        return $this->render('SoftUniBundle:productcategory:new.html.twig', [
             'productCategory' => $productCategory,
-            'form' => $form->createView(),
-        ));
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -99,8 +97,7 @@ class ProductCategoryController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $manager = $this->get('softuni.product_category_manager');
-            $manager->setCategory($productCategory);
-            $manager->editCategory();
+            $manager->editCategory($productCategory);
 
             $this->addFlash('success', 'Product category was successfully updated.');
 
@@ -130,8 +127,9 @@ class ProductCategoryController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->get('softuni.product_category_manager');
-            $manager->setCategory($productCategory);
-            $manager->removeCategory();
+            $manager->removeCategory($productCategory);
+
+            $this->addFlash('success', 'Product category was successfully deleted.');
         }
 
         return $this->redirectToRoute('admin_product-category_index');
