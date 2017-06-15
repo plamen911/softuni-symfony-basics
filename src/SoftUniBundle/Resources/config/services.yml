@@ -7,9 +7,14 @@ services:
     slugger:
         class: SoftUniBundle\Service\Slugger
 
+    softuni.product_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory:   ["@doctrine.orm.entity_manager", getRepository]
+        arguments: [SoftUniBundle\Entity\Product]
+
     softuni.product_manager:
         class: SoftUniBundle\Service\ProductManager
-        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+        arguments: ["@doctrine.orm.entity_manager", "@service_container", "@softuni.product_repository"]
 
     softuni.product_category_manager:
         class: SoftUniBundle\Service\ProductCategoryManager

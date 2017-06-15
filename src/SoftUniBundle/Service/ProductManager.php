@@ -3,8 +3,10 @@
 namespace SoftUniBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Psr\Container\ContainerInterface;
 use SoftUniBundle\Entity\Product;
+use SoftUniBundle\Repository\ProductRepository;
 
 /**
  * Class ProductManager
@@ -16,35 +18,29 @@ class ProductManager
     private $em;
     private $container;
     /**
-     * @var Product $product
+     * @var ProductRepository $productRepo
      */
-    private $product;
+    private $productRepo;
 
     /**
      * ProductManager constructor.
      * @param EntityManagerInterface $entityManager
      * @param ContainerInterface $container
+     * @param EntityRepository $productRepo
      */
-    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container)
+    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, EntityRepository $productRepo)
     {
         $this->em = $entityManager;
         $this->container = $container;
+        $this->productRepo = $productRepo;
     }
 
     /**
-     * @param Product $product
-     */
-    public function setProduct(Product $product)
-    {
-        $this->product = $product;
-    }
-
-    /**
-     * @return Product
+     * @return string
      */
     public function getClass()
     {
-        return $this->product;
+        return $this->productRepo->getClassName();
     }
 
     /**
@@ -55,10 +51,8 @@ class ProductManager
         return $this->em;
     }
 
-    public function createProduct()
+    public function createProduct(Product $product)
     {
-        $product = $this->product;
-
         $product->setSlug($this->container->get('slugger')->slugify($product->getTitle()));
         $product->setUpdatedAt(new \DateTime());
         $product->upload();
@@ -67,19 +61,22 @@ class ProductManager
         $this->em->flush();
     }
 
-    public function editProduct()
+    public function editProduct(Product $product)
     {
-        $this->createProduct();
+        $this->createProduct($product);
     }
 
-    public function removeProduct()
+    /**
+     * @param Product $product
+     */
+    public function removeProduct(Product $product)
     {
-        $this->em->remove($this->product);
+        $this->em->remove($product);
         $this->em->flush();
     }
 
     public function findProductBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->em->getRepository('SoftUniBundle:Product')->findBy($criteria, $orderBy, $limit, $offset);
+        return $this->productRepo->findBy($criteria, $orderBy, $limit, $offset);
     }
 }

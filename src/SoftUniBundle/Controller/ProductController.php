@@ -3,6 +3,7 @@
 namespace SoftUniBundle\Controller;
 
 use SoftUniBundle\Entity\Product;
+use SoftUniBundle\Service\ProductManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,15 +23,16 @@ class ProductController extends Controller
      *
      * @Route("/", name="admin_product_index")
      * @Method("GET")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
         $manager = $this->get('softuni.product_manager');
         $products = $manager->findProductBy([], ['rank' => 'DESC', 'title' => 'ASC']);
 
-        return $this->render('SoftUniBundle:product:index.html.twig', array(
-            'products' => $products,
-        ));
+        return $this->render('SoftUniBundle:product:index.html.twig', [
+            'products' => $products
+        ]);
     }
 
     /**
@@ -49,16 +51,15 @@ class ProductController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->get('softuni.product_manager');
-            $manager->setProduct($product);
-            $manager->createProduct();
+            $manager->createProduct($product);
 
             return $this->redirectToRoute('admin_product_show', array('id' => $product->getId()));
         }
 
-        return $this->render('SoftUniBundle:product:new.html.twig', array(
+        return $this->render('SoftUniBundle:product:new.html.twig', [
             'product' => $product,
-            'form' => $form->createView(),
-        ));
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -73,10 +74,10 @@ class ProductController extends Controller
     {
         $deleteForm = $this->createDeleteForm($product);
 
-        return $this->render('SoftUniBundle:product:show.html.twig', array(
+        return $this->render('SoftUniBundle:product:show.html.twig', [
             'product' => $product,
-            'delete_form' => $deleteForm->createView(),
-        ));
+            'delete_form' => $deleteForm->createView()
+        ]);
     }
 
     /**
@@ -96,17 +97,16 @@ class ProductController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $manager = $this->get('softuni.product_manager');
-            $manager->setProduct($product);
-            $manager->editProduct();
+            $manager->editProduct($product);
 
             return $this->redirectToRoute('admin_product_edit', array('id' => $product->getId()));
         }
 
-        return $this->render('SoftUniBundle:product:edit.html.twig', array(
+        return $this->render('SoftUniBundle:product:edit.html.twig', [
             'product' => $product,
             'form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+            'delete_form' => $deleteForm->createView()
+        ]);
     }
 
     /**
@@ -125,8 +125,7 @@ class ProductController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->get('softuni.product_manager');
-            $manager->setProduct($product);
-            $manager->removeProduct();
+            $manager->removeProduct($product);
         }
 
         return $this->redirectToRoute('admin_product_index');
